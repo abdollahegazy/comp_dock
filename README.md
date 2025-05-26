@@ -31,10 +31,13 @@ python find_empty_ligand.py --input-dir /path/to/docking/results --output empty_
 
 ---
 
-### 2. `most_viable.py`
+###  `most_viable.py`
 
 Analyzes pose counts to determine which ligand conformations have the most complete data for downstream RMSD.
 
+## `merger.py`
+
+Merges MD lowest free energy ligands to receptor processed proteins into full complexes
 <!-- ```bash
 python most_viable.py --input-dir /path/to/pos
 ``` -->
