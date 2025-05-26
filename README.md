@@ -41,3 +41,7 @@ Merges MD lowest free energy ligands to receptor processed proteins into full co
 <!-- ```bash
 python most_viable.py --input-dir /path/to/pos
 ``` -->
+
+TODO:
+- figure out some more analysis shiz idk
+
