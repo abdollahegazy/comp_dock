@@ -1,4 +1,4 @@
-** Comparison of AF3 and MD Structures**
+**Comparison of AF3 and MD Structures**
 
 ---
 
