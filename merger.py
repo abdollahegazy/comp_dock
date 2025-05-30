@@ -19,13 +19,11 @@ LIGANDS = [
     13876103, 23208, 3698, 395716, 4450907, 6223, 7930, # 2169 omitted bc its always empty
 ]
 
-# SPECIES = ["Human", "DouglasFir", "Arabidopsis", "Eucalyptus"]
-SPECIES = ["Arabidopsis","Eucalyptus"]
-
+SPECIES = ["Human", "DouglasFir", "Arabidopsis", "Eucalyptus"]
 OUT_DIR = Path("./complexes")
 TEMP_DIR = Path("./temp")
 
-def cache_obabel(conf=9,pose=0):
+def cache_obabel(conf=3,pose=0):
     
     for species in SPECIES:
 
@@ -135,7 +133,7 @@ def merge_pdb_files(parser):
             Path.mkdir(OUT_DIR/species/protein_id,exist_ok=True)
 
             for ligand in LIGANDS:
-                ligand_path = protein_dir / str(ligand) / "ligand_c9_p0_cleaned.pdb"
+                ligand_path = protein_dir / str(ligand) / "ligand_c3_p0_cleaned.pdb"
                 if not ligand_path.exists():
                     continue
                 Path.mkdir(OUT_DIR/species/protein_id/str(ligand),exist_ok=True)

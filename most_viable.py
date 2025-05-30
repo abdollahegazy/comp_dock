@@ -30,7 +30,9 @@ def count_missing_protein_confs():
     '6': 237,
     '7': 246,
     '8': 227,
-    '9': 226} # i didnt fully run the other script but it also had 39K out 44K (2000 proteins * 22 ligands) docked poses, so ill use conf 9 pose 0
+    '9': 226} 
+    # i didnt fully run the other script but it also had 39K out 44K (2000 proteins * 22 ligands) docked poses, so ill use conf 9 pocket 0
+    #nvm gonna use conf 3 pocket 0 bc lower pose better and that appears to be good
 
     on my proteins had 0 issues.
 
@@ -66,8 +68,8 @@ def count_missing_ligands():
      #tuples are (conf,pose)
 
     missing_ligands_conf_poses = {}
-
-    for conf in range(9,10):
+    # confs = [1,2,3,4]
+    for conf in range(0,11+1):
         for species in SPECIES:
             PROTEIN_PATH = Path(f"/dogwood/tank/Duncan/IMPACTS2022/Simulations/{species}/docking")
             # PROTEIN_PATH = Path(f"../docking/docking/{species}")
@@ -92,9 +94,8 @@ def count_missing_ligands():
                             p+=1
                             ligand_c_p = ligand_path / f"out_poses_c{conf}_p{p}.pdbqt"
 
-        break
 
-    print(missing_ligands_conf_poses)           
+        print(missing_ligands_conf_poses)           
 
 
     #                 if not protein.exists():

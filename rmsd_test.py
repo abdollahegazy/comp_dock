@@ -7,7 +7,7 @@ from collections import defaultdict
 
 
 AF3_COMPLEXES = Path("./AF_complexes/")
-MD_COMPLEXES = Path("./MD_complexes/")
+MD_COMPLEXES = Path("./MD_complexes_c3/")
 SPECIES = ["Arabidopsis","DouglasFir","Eucalyptus","Human"]
 LIGANDS = [
     10194105, 21105998, 2424, 388386, 4444418, 4518347, 6309, 84989,
@@ -27,7 +27,9 @@ def calculate_ligand_rmsd(af3_complex,md_complex):
     if prot_md.n_atoms != prot_af3.n_atoms:
         raise ValueError(f"MD ligand has {prot_md.n_atoms} atoms, AF3 ligand has {prot_af3.n_atoms} atoms")
     
+    #aligns MD onto AF3
     align.alignto(u_md, u_af3, select="protein and name CA") #align proteins
+    #there was soem issue about Oxygen being gone in the MD i believ 
 
     lig_md = u_md.select_atoms("segid L and not element H") #basically the MD ligand is missing an extra H always?
     lig_af3 = u_af3.select_atoms("segid B and not element H")
@@ -75,17 +77,31 @@ def run_rmsd():
                 lig_stats = ligand_rmsd[ligand]
                 lig_stats[0] += 1
                 lig_stats[1] += r
+                # break
+            # break
 
     return species_rmsd,ligand_rmsd
 
 
 if __name__ == "__main__":
     species_rmsd,ligand_rmsd = run_rmsd()
+    species_rmsd = dict(species_rmsd)
+    ligand_rmsd = dict(ligand_rmsd)
 
     print(species_rmsd)
+    print()
     print(ligand_rmsd)
 
 
+    for name, (n, total) in species_rmsd.items():
+        avg = total / n if n else float('nan')
+        print(f"{name:12s}  {n:3d} complexes  avg RMSD = {avg:.3f} Å")
+
+    print()
+
+    for lig, (n, total) in ligand_rmsd.items():
+        avg = total / n if n else float('nan')
+        print(f"{lig:8d}  {n:3d} hits      avg RMSD = {avg:.3f} Å")
 
 
 
