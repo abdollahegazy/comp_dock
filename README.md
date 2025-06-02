@@ -10,10 +10,10 @@ This repository contains scripts to identify, process, and compare ligand–prot
 
 ## Current Status
 
-* **RMSD Calculation**: Computing RMSD between AF3-derived structures and MD-derived structures.
-* **Error Detection**: `find_empty_ligand.py` identifies ligand directories where AutoDock Vina failed (empty or missing poses).
-* **Pose Viability**: `most_viable.py` evaluates combinations of ligand poses/conformations and ranks those with the greatest number of successful structures for comparison.
-* **RMSD Testing**: `rmsd_test.py` performs per-atom RMSD calculations between AF3 and MD complexes.
+- **RMSD Calculation**: Computing RMSD between AF3-derived structures and MD-derived structures.
+- **Error Detection**: `find_empty_ligand.py` identifies ligand directories where AutoDock Vina failed (empty or missing poses).
+- **Pose Viability**: `most_viable.py` evaluates combinations of ligand poses/conformations and ranks those with the greatest number of successful structures for comparison.
+- **RMSD Testing**: `rmsd_test.py` performs per-atom RMSD calculations between AF3 and MD complexes.
 
 ---
 
@@ -22,26 +22,32 @@ This repository contains scripts to identify, process, and compare ligand–prot
 ### `find_empty_ligand.py`
 
 Detects ligand outputs that are empty or invalid (where Vina errors occur).
-<!-- 
+
+<!--
 ```bash
 python find_empty_ligand.py --input-dir /path/to/docking/results --output empty_ligands.txt
 ``` -->
-<!-- 
+<!--
 **Output**: `empty_ligands.txt` listing species/protein/ligand combinations with missing or malformed PDBQT files. -->
 
 ---
 
-###  `most_viable.py`
+### `most_viable.py`
 
 Analyzes pose counts to determine which ligand conformations have the most complete data for downstream RMSD.
 
 ## `merger.py`
 
 Merges MD lowest free energy ligands to receptor processed proteins into full complexes
+
 <!-- ```bash
 python most_viable.py --input-dir /path/to/pos
 ``` -->
 
-TODO:
-- figure out some more analysis shiz idk
+### TODO:
 
+- manually inspect some outlier structures for validity
+
+- find mean RMSD for a given protein across all ligands. involves making graph across all proteins (prob histogram) where protein SaSa is X axis and average RMSD across all ligands on the Y axis. point is to see if larger proteins have more rmsd (because more SaSa = more space for ligands to choose from = more variability)
+
+- remaining: how representitive are these in the wild. not feasible to compare to crystal structures. take our samples and run in MD to see how they act in natural setting.
