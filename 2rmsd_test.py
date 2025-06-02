@@ -9,6 +9,7 @@ from collections import defaultdict
 AF3_COMPLEXES = Path("./AF_complexes/")
 MD_COMPLEXES = Path("./MD_complexes_c3/")
 SPECIES = ["Arabidopsis","DouglasFir","Eucalyptus","Human"]
+
 LIGANDS = [
     10194105, 21105998, 2424, 388386, 4444418, 4518347, 6309, 84989,
     108426, 30999, 393012, 4444606, 6085, 780, 917,
@@ -22,6 +23,7 @@ def calculate_ligand_rmsd(af3_complex,md_complex):
 
     prot_md = u_md.select_atoms("protein and name CA")  #Ca backbone because just using 'backbone' resulted in 1 extra atom 
     prot_af3 = u_af3.select_atoms("protein and name CA")
+    #there was soem issue about Oxygen being gone in the MD i believe
 
     #proteins need to be same size
     if prot_md.n_atoms != prot_af3.n_atoms:
@@ -29,7 +31,7 @@ def calculate_ligand_rmsd(af3_complex,md_complex):
     
     #aligns MD onto AF3
     align.alignto(u_md, u_af3, select="protein and name CA") #align proteins
-    #there was soem issue about Oxygen being gone in the MD i believ 
+    #just realized i align the universes, should align the proteins
 
     lig_md = u_md.select_atoms("segid L and not element H") #basically the MD ligand is missing an extra H always?
     lig_af3 = u_af3.select_atoms("segid B and not element H")
@@ -45,6 +47,17 @@ def calculate_ligand_rmsd(af3_complex,md_complex):
     
     return r
 
+#manually inspect some outlying structures
+
+#mean rmsd for a given protein across all ligands
+#with protein's surface area/ solvet accessible surface area (MDAnalysis, sasa)
+#logically follows as ligand has more area to chose from
+#plot against the proteins sasa
+#want to see if bigger proteins give more rmsd across ligands
+
+#remaining rmsd info
+#how reppresenetive are these results of a protein in the wild
+#take sample of our proteins and run in MD to see if any changes occur (2ndary structure,binding sites?)
 
 def run_rmsd():
 

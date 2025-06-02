@@ -1,7 +1,7 @@
             count     total_rmsd   avg_rmsd                                                                                                               
 species                                                                                                                                                    
-DouglasFir    8484  148718.215893  17.529257                                                                                                               
-Human         9236  173483.844259  18.783439                                                                                                               
+DouglasFir    8484  148718.215893  17.529257  #tends to have smallest protein sizes, and low qualities                                                                                                             
+Human         9236  173483.844259  18.783439  #tends to have some of the largest                                                                                                               
 Eucalyptus   10470  212914.326459  20.335657                                                                                                               
 Arabidopsis  10313  235257.842974  22.811776                                                                                                               
                                                
@@ -33,4 +33,5 @@ ligand_id
   category  total_count     total_rmsd  global_avg_rmsd
 0  ligands        38503  770374.229585        20.008161
 1  species        38503  770374.229585        20.008161
+
 
