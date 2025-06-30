@@ -1,0 +1,16 @@
+this is a basic example of a molecular dynamics directory, with all the files
+necessary to complete a basic simulation. The key files here are:
+
+system.psf - structural file containing masses and other details
+system.pdb - secondary structural file - doesn't contain all the data in the
+psf but in many ways, quite similar.
+system.xsc - describes the dimensions of the simulation's periodic boundary
+
+toppar - a directory containing topology and parameter files describing the
+shape, polarity, and structure of specific residues. These files will need to
+be pointed to inside of the .namd scripts
+
+system_eq.namd - a namd script responsible for an initial, equilibration run,
+which attempts to quickly bring the system to a low energy state
+system_run.namd - almost identical, a namd script responsible for longer
+simulations of the system
