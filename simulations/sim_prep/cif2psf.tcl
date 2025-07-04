@@ -1,3 +1,4 @@
+
 # Load required packages
 package require psfgen
 package require solvate
@@ -5,52 +6,82 @@ package require autoionize
 package require pbctools
 
 proc solvate_and_ionize {psf_file pdb_file output_prefix} {
+    # Solvate the system
     solvate $psf_file $pdb_file -o "${output_prefix}_solvated" -minmax {{-60 -60 -60} {60 60 60}}
     puts "System solvated: ${output_prefix}_solvated"
 
+    # Ionize the system
     autoionize -psf "${output_prefix}_solvated.psf" -pdb "${output_prefix}_solvated.pdb" -sc 0.15 -o "${output_prefix}_system"
     puts "System ionized: ${output_prefix}_system"
 }
 
-# Load topology files
-# topology top_all36_prot.rtf
-# topology toppar/top_all36_cgenff.rtf
-# topology toppar/2PG_deprot.str
-# topology /dogwood/home/dboren/toppar_c36_jul21/toppar_water_ions.str
+# Load topology files - this may need to change depending on the system, but I think it should be fine
+topology toppar/top_all36_prot.rtf
+topology toppar/top_all36_cgenff.rtf
+topology toppar/toppar_water_ions.str
 
-# Residue and atom aliasing
-# pdbalias residue HIS HSD
-# pdbalias atom ILE CD1 CD
 
-# Loop through all complexes recursively
-set complex_dirs [glob -nocomplain -type d complexes/*/*/*]
+# Alias for residues not recognized by CHARMM
+#This is unlikely to be correct. You need to 
+pdbalias residue HIS HSD ;# Alias HIS to HSD (neutral form with delta protonation)
+pdbalias atom ILE CD1 CD ;# Example alias for atoms, adjust if required
+# pdbalias residue LIG UNL
+
+
+# loop through all complexes recursively
+set complex_dirs [glob -nocomplain -type d ../complexes/*/*/*]
 
 foreach dir $complex_dirs {
     puts "\nProcessing directory: $dir"
 
-    # foreach tag {AF3 MD} {
-    #     set pdb_path "${dir}/${tag}_complex.pdb"
+    set cif_files [glob -nocomplain ${dir}/*.cif]
 
-    #     if {[file exists $pdb_path]} {
-    #         set output_prefix "${dir}/${tag}"
-    #         set psf_file "${output_prefix}.psf"
-    #         set pdb_file "${output_prefix}.pdb"
+    foreach cif_file $cif_files {
+        puts "\n\tProcessing CIF: $cif_file"
 
-    #         # Load and write initial PSF/PDB
-    #         resetpsf
-    #         segment PA {
-    #             pdb $pdb_path
-    #         }
-    #         coordpdb $pdb_path PA
-    #         guesscoord
-    #         writepsf $psf_file
-    #         writepdb $pdb_file
+        mol new $cif_file
+        set selA [atomselect top "protein"]
+        $selA set segname PA
+        
+        $selA writepdb chainA.pdb
 
-    #         # Solvate and ionize
-    #         solvate_and_ionize $psf_file $pdb_file $output_prefix
-    #         pbc writexst "${output_prefix}.xsc"
-    #     } else {
-    #         puts "WARNING: Missing $pdb_path"
-    #     }
-    # }
+        segment PA {
+            pdb chainA.pdb
+        }
+        coordpdb chainA.pdb PA
+        guesscoord
+
+        # Extract base name of CIF file (e.g., AF3_complex -> AF3_complex_sim)
+        set base [file rootname [file tail $cif_file]]
+        set output_prefix "${dir}/${base}_sim"
+
+
+        #water/ions probably not necessary
+        set selB [atomselect top "not (protein or water or ions)"] 
+        $selB set segname LIG
+
+        $selB writepdb chainB.pdb
+        segment LIG {
+            pdb chainB.pdb
+        }
+        coordpdb chainB.pdb LIG
+        guesscoord
+        
+        # break;  
+        writepsf "${output_prefix}.psf"
+        writepdb "${output_prefix}.pdb"
+        pbc writexst "${output_prefix}.xsc"
+
+
+        solvate_and_ionize "${output_prefix}.psf" "${output_prefix}.pdb" "${output_prefix}"
+        pbc writexst "${output_prefix}.xsc"
+        resetpsf
+        mol delete all
+
+    }
+    break;
 }
+
+
+
+

@@ -46,6 +46,8 @@ python most_viable.py --input-dir /path/to/pos
 
 ### TODO:
 
+- sim stuff
+
 - manually inspect some outlier structures for validity
 
 - find mean RMSD for a given protein across all ligands. involves making graph across all proteins (prob histogram) where protein SaSa is X axis and average RMSD across all ligands on the Y axis. point is to see if larger proteins have more rmsd (because more SaSa = more space for ligands to choose from = more variability)

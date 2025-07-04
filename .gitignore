@@ -3,3 +3,15 @@ MD_complexes
 temp
 MD_complexes_c3
 MD_complexes_c_9
+misc
+images
+__pycache__
+simulations/complexes
+simulations/pdb2cif
+
+*/toppar
+*.rtf
+*.str
+
+simulations/templateSystem/toppar/
+simulations/sim_prep/toppar/

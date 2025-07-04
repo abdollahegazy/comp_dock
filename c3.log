@@ -4,6 +4,16 @@ DouglasFir    8484  148718.215893  17.529257  #tends to have smallest protein si
 Human         9236  173483.844259  18.783439  #tends to have some of the largest                                                                                                               
 Eucalyptus   10470  212914.326459  20.335657                                                                                                               
 Arabidopsis  10313  235257.842974  22.811776                                                                                                               
+
+
+species     count     avg_SASA
+DouglasFir  386        10056.78
+Human       420        15648.74
+Eucalyptus  476        18778.54
+Arabidopsis 469        21293.40
+
+{'Arabidopsis': , 'Eucalyptus': , 'Human': , 'DouglasFir': }
+
                                                
            count    total_rmsd   avg_rmsd
 ligand_id                                

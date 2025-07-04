@@ -26,11 +26,11 @@ topology /dogwood/home/dboren/toppar_c36_jul21/toppar_water_ions.str
 pdbalias residue HIS HSD ;# Alias HIS to HSD (neutral form with delta protonation)
 pdbalias atom ILE CD1 CD ;# Example alias for atoms, adjust if required
 
-
 #this loop was originally intended to loop over 7 directories with different proteins - you'll have to change it a bit
 
 foreach dir [list "cnpgp_pga_mg" "rsg2npgp_pga_mg" "rsg2spgp_pga_mg" "rspgp_pga_mg" "sepgp_pga_mg" "tapgp_pga_mg" "tfpgp_pga_mg"] {
     puts "DIR IS $dir"
+    
     mol new $dir/${dir}_model.cif
     #This cif file must be turned into a pdb.
     set selA [atomselect top "protein"] #this can probably just be "protein"

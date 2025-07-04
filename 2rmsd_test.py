@@ -1,13 +1,21 @@
-import MDAnalysis as mda
-from MDAnalysis.analysis import align
-from MDAnalysis.analysis.rms import rmsd
+import json
+import sys
 from pathlib import Path
 from tqdm import tqdm
 from collections import defaultdict
+from datetime import datetime
 
+import MDAnalysis as mda
+from MDAnalysis.analysis import align
+from MDAnalysis.analysis.rms import rmsd
+
+
+
+CONFORMATION = sys.argv[1]
 
 AF3_COMPLEXES = Path("./AF_complexes/")
-MD_COMPLEXES = Path("./MD_complexes_c3/")
+MD_COMPLEXES = Path(f"./MD_complexes_c{CONFORMATION}/")
+
 SPECIES = ["Arabidopsis","DouglasFir","Eucalyptus","Human"]
 
 LIGANDS = [
@@ -15,6 +23,7 @@ LIGANDS = [
     108426, 30999, 393012, 4444606, 6085, 780, 917,
     13876103, 23208, 3698, 395716, 4450907, 6223, 7930, # 2169 omitted bc its always empty on MD sims
 ]
+
 
 def calculate_ligand_rmsd(af3_complex,md_complex):
 
@@ -83,6 +92,9 @@ def run_rmsd():
 
                 r = calculate_ligand_rmsd(cmplx_af3,cmplx_md)
 
+                protein_name = prtn_path_md.name
+                detailed_rmsd[species_name][protein_name][str(ligand)] = r
+
                 species_stats = species_rmsd[species_name]
                 species_stats[0] += 1       # increment count
                 species_stats[1] += r       # accumulate RMSD
@@ -90,13 +102,26 @@ def run_rmsd():
                 lig_stats = ligand_rmsd[ligand]
                 lig_stats[0] += 1
                 lig_stats[1] += r
-                # break
-            # break
+
+
 
     return species_rmsd,ligand_rmsd
 
 
+
+def to_dict(obj):
+    """Recursively convert defaultdicts and other mappings to dicts."""
+    if isinstance(obj, defaultdict):
+        obj = dict(obj)
+    if isinstance(obj, dict):
+        return {k: to_dict(v) for k, v in obj.items()}
+    else:
+        return obj
+    
+
 if __name__ == "__main__":
+    detailed_rmsd = defaultdict(lambda: defaultdict(dict))
+
     species_rmsd,ligand_rmsd = run_rmsd()
     species_rmsd = dict(species_rmsd)
     ligand_rmsd = dict(ligand_rmsd)
@@ -115,6 +140,23 @@ if __name__ == "__main__":
     for lig, (n, total) in ligand_rmsd.items():
         avg = total / n if n else float('nan')
         print(f"{lig:8d}  {n:3d} hits      avg RMSD = {avg:.3f} Å")
+
+
+    output = {
+        "metadata": {
+            "generated_on": datetime.now().isoformat(),
+            "description": "Per-protein, per-ligand RMSD for each species (AF3 vs MD)",
+            "conformation": CONFORMATION,
+        },
+        "rmsd": to_dict(detailed_rmsd),  # make sure to convert any defaultdicts to regular dicts
+    }
+
+
+    with open(f"rmsd_conf{CONFORMATION}.json", "w") as f:
+        # Convert defaultdicts to dicts for JSON serialization
+        json.dump(output, f, indent=4)
+
+
 
 
 

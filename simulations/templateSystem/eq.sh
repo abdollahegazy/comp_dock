@@ -11,7 +11,7 @@
 
 cd $SLURM_SUBMIT_DIR
 #modules are loaded automatically by the NAMD module.
-module use /mnt/home/vermaasj/modules ;
+    module use /mnt/home/vermaasj/modules ;
 module load NAMD/3.0.1-gpu
 NUM=`ls system_eq[0-9][0-9][0-9].dcd 2>/dev/null | wc -l`
 PRINTNUM=`printf "%03d" $NUM`
