@@ -34,20 +34,22 @@ set complex_dirs [glob -nocomplain -type d ../complexes/*/*/*]
 foreach dir $complex_dirs {
     puts "\nProcessing directory: $dir"
 
-    set cif_files [glob -nocomplain ${dir}/*.cif]
+    set cif_files [glob -nocomplain ${dir}/*.pdb]
 
     foreach cif_file $cif_files {
         puts "\n\tProcessing CIF: $cif_file"
 
-        mol new $cif_file
+        mol new $cif_file type pdb
         set selA [atomselect top "protein"]
         $selA set segname PA
         
-        $selA writepdb chainA.pdb
+        # $selA writepdb chainA.pdb
 
         segment PA {
             pdb chainA.pdb
         }
+
+
         coordpdb chainA.pdb PA
         guesscoord
 
@@ -60,10 +62,18 @@ foreach dir $complex_dirs {
         set selB [atomselect top "not (protein or water or ions)"] 
         $selB set segname LIG
 
-        $selB writepdb chainB.pdb
+        set ligand_id [file tail $dir] 
+        topology toppar/${ligand_id}.str
+        pdbalias residue LIG L${ligand_id}
+        
+
+        # $selB writepdb chainB.pdb
+
         segment LIG {
             pdb chainB.pdb
         }
+
+
         coordpdb chainB.pdb LIG
         guesscoord
         
