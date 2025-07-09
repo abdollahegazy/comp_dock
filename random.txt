@@ -1,0 +1,46 @@
+Randomly or stratify select base count/daltons to stratify by bins
+- use base counts
+
+About 20 proteins selected in total proteins of af3 and md one
+
+Md summary:
+Just finds atom math and we give it specific atoms of proteins
+
+.namd file is the main ones. Usually _eq to equilibrate then the run.namd
+- pdb and pdf are structue 
+-xsc is dimensions of the boundaries of the system
+
+
+
+TODOs
+
+1. Script to get PSF from PDB and XSC file (making XSC will be made from making PSF file)
+2. Get a NAMD file and all to input
+
+- PDB -> PSF + XSC
+- NAMD file (run + eq)
+- toppar
+
+
+
+
+Main outputs:
+
+.out or .log
+
+Shows energy values every 1k time steps (picoseconds) (500k steps is about 1 ns)
+
+.dcd files - binary files . Load into VMD , multiple frames of an MD each dcd is a frame, load with a psf.
+
+Get structure from final dcd or final half of dcd . Analysis is tcl or PyVMD
+
+
+
+
+Multiple stages:
+Wanted to discover ab isoprene
+Wanted to make a tool. 
+
+
+- making timeline to compare accuracy of af2 to af3. How well does previous pipeline work to just docking with af3.
+

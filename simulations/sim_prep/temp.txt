@@ -1,0 +1,119 @@
+../complexes/
+├── Arabidopsis
+│   ├── a0a178wd27
+│   │   └── 780
+│   │       ├── AF3_complex.pdb
+│   │       └── MD_complex.pdb
+│   ├── a0a1i9lq90
+│   │   └── 6085
+│   │       ├── AF3_complex.pdb
+│   │       └── MD_complex.pdb
+│   ├── a0a5s9y963
+│   │   └── 21105998
+│   │       ├── AF3_complex.pdb
+│   │       └── MD_complex.pdb
+│   ├── f4i9u3
+│   │   └── 4518347
+│   │       ├── AF3_complex.pdb
+│   │       └── MD_complex.pdb
+│   └── q9zv59
+│       └── 4518347
+│           ├── AF3_complex.pdb
+│           └── MD_complex.pdb
+├── DouglasFir
+│   ├── c6fag5
+│   │   └── 780
+│   │       ├── AF3_complex.pdb
+│   │       └── MD_complex.pdb
+│   ├── c6fba5
+│   │   └── 84989
+│   │       ├── AF3_complex.pdb
+│   │       └── MD_complex.pdb
+│   ├── c6fdc2
+│   │   └── 917
+│   │       ├── AF3_complex.pdb
+│   │       └── MD_complex.pdb
+│   ├── d7p707
+│   │   └── 2424
+│   │       ├── AF3_complex.pdb
+│   │       └── MD_complex.pdb
+│   ├── h9bqs4
+│   │   └── 10194105
+│   │       ├── AF3_complex.pdb
+│   │       └── MD_complex.pdb
+│   └── q5qju1
+│       └── 23208
+│           ├── AF3_complex.pdb
+│           └── MD_complex.pdb
+├── Eucalyptus
+│   ├── a0a058zv31
+│   │   └── 6085
+│   │       ├── AF3_complex.pdb
+│   │       └── MD_complex.pdb
+│   ├── a0a059bau5
+│   │   └── 388386
+│   │       ├── AF3_complex.pdb
+│   │       └── MD_complex.pdb
+│   ├── a0a059bl53
+│   │   └── 4444418
+│   │       ├── AF3_complex.pdb
+│   │       └── MD_complex.pdb
+│   ├── a0a059cmm4
+│   │   └── 84989
+│   │       ├── AF3_complex.pdb
+│   │       └── MD_complex.pdb
+│   └── a0a059cvn1
+│       └── 23208
+│           ├── AF3_complex.pdb
+│           └── MD_complex.pdb
+└── Human
+    ├── a0a3q9wvj8
+    │   └── 84989
+    │       ├── AF3_complex.pdb
+    │       ├── AF3_complex_sim.pdb
+    │       ├── AF3_complex_sim.psf
+    │       ├── AF3_complex_sim_solvated.log
+    │       ├── AF3_complex_sim_solvated.pdb
+    │       ├── AF3_complex_sim_solvated.psf
+    │       ├── AF3_complex_sim_system.pdb
+    │       ├── AF3_complex_sim_system.psf
+    │       ├── AF3_complex_sim.xsc
+    │       ├── MD_complex.pdb
+    │       ├── MD_complex_sim.pdb
+    │       ├── MD_complex_sim.psf
+    │       ├── MD_complex_sim_solvated.log
+    │       ├── MD_complex_sim_solvated.pdb
+    │       ├── MD_complex_sim_solvated.psf
+    │       ├── MD_complex_sim_system.pdb
+    │       ├── MD_complex_sim_system.psf
+    │       └── MD_complex_sim.xsc
+    ├── a0a5c2gb11
+    │   └── 4444606
+    │       ├── AF3_complex.pdb
+    │       └── MD_complex.pdb
+    ├── q8n2m3
+    │   └── 23208
+    │       ├── AF3_complex.pdb
+    │       └── MD_complex.pdb
+    └── u5yel9
+        └── 917
+            ├── AF3_complex.pdb
+            ├── AF3_complex_sim.pdb
+            ├── AF3_complex_sim.psf
+            ├── AF3_complex_sim_solvated.log
+            ├── AF3_complex_sim_solvated.pdb
+            ├── AF3_complex_sim_solvated.psf
+            ├── AF3_complex_sim_system.pdb
+            ├── AF3_complex_sim_system.psf
+            ├── AF3_complex_sim.xsc
+            ├── MD_complex.pdb
+            ├── MD_complex_sim.pdb
+            ├── MD_complex_sim.psf
+            ├── MD_complex_sim_solvated.log
+            ├── MD_complex_sim_solvated.pdb
+            ├── MD_complex_sim_solvated.psf
+            ├── MD_complex_sim_system.pdb
+            ├── MD_complex_sim_system.psf
+            └── MD_complex_sim.xsc
+
+44 directories, 72 files

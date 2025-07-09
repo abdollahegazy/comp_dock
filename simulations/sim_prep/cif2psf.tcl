@@ -18,14 +18,14 @@ proc solvate_and_ionize {psf_file pdb_file output_prefix} {
 # Load topology files - this may need to change depending on the system, but I think it should be fine
 topology toppar/top_all36_prot.rtf
 topology toppar/top_all36_cgenff.rtf
-topology toppar/toppar_water_ions.str
+# topology toppar/toppar_water_ions.str
 
 
 # Alias for residues not recognized by CHARMM
 #This is unlikely to be correct. You need to 
 pdbalias residue HIS HSD ;# Alias HIS to HSD (neutral form with delta protonation)
 pdbalias atom ILE CD1 CD ;# Example alias for atoms, adjust if required
-# pdbalias residue LIG UNL
+# pdbalias residue UNL LIG
 
 
 # loop through all complexes recursively
@@ -34,16 +34,29 @@ set complex_dirs [glob -nocomplain -type d ../complexes/*/*/*]
 foreach dir $complex_dirs {
     puts "\nProcessing directory: $dir"
 
-    set cif_files [glob -nocomplain ${dir}/*.pdb]
+    set cif_files [glob -nocomplain ${dir}/MD_complex.pdb ${dir}/AF3_complex.pdb]
 
     foreach cif_file $cif_files {
         puts "\n\tProcessing CIF: $cif_file"
+
+
+        set base [file rootname [file tail $cif_file]]
+        set output_prefix "${dir}/${base}_sim"
+
+        set checker "${output_prefix}_system.psf"
+
+        if {[file exists $checker]} {
+            puts "✅ Skipping $cif_file — Already processed: ${checker}"
+            mol delete all
+            continue
+        }
+        # puts $output_prefixå
 
         mol new $cif_file type pdb
         set selA [atomselect top "protein"]
         $selA set segname PA
         
-        # $selA writepdb chainA.pdb
+        $selA writepdb chainA.pdb
 
         segment PA {
             pdb chainA.pdb
@@ -54,8 +67,6 @@ foreach dir $complex_dirs {
         guesscoord
 
         # Extract base name of CIF file (e.g., AF3_complex -> AF3_complex_sim)
-        set base [file rootname [file tail $cif_file]]
-        set output_prefix "${dir}/${base}_sim"
 
 
         #water/ions probably not necessary
@@ -63,11 +74,22 @@ foreach dir $complex_dirs {
         $selB set segname LIG
 
         set ligand_id [file tail $dir] 
-        topology toppar/${ligand_id}.str
+        set lig_param_file "toppar/${ligand_id}.str"
+        
+        if {![file exists $lig_param_file]} {
+            puts "⚠️  Skipping $cif_file — Missing topology file: $lig_param_file"
+            resetpsf
+            mol delete all
+            continue
+        }
+
+
+        topology $lig_param_file
+        pdbalias residue UNL L${ligand_id}
         pdbalias residue LIG L${ligand_id}
         
 
-        # $selB writepdb chainB.pdb
+        $selB writepdb chainB.pdb
 
         segment LIG {
             pdb chainB.pdb
@@ -89,7 +111,7 @@ foreach dir $complex_dirs {
         mol delete all
 
     }
-    break;
+
 }
 
 
