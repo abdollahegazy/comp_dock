@@ -18,6 +18,9 @@ proc get_first_ts { xscfile } {
 structure       system.psf
 coordinates     system.pdb
 paraTypeCharmm  on
+parameters      toppar/6309.str
+parameters      toppar/6085.str
+parameters      toppar/30999.str
 parameters      toppar/par_all36m_prot.prm
 parameters      toppar/par_all36_na.prm
 parameters      toppar/par_all36_carb.prm
@@ -149,6 +152,6 @@ if { $runnum < 1 } {
 	run 5000
 } else {
     #CUDASOAintegrate off
-    #5 ns each
+    #2 ns each
     run 1000000
 }

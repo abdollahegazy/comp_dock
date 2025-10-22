@@ -2,7 +2,7 @@
 
 DEST_HOST="hegazyab@rsync.hpcc.msu.edu"
 DEST_BASE="/mnt/scratch/hegazyab/dock_comp/simulations/complexes"
-SAMPLE_FILE="sample"
+SAMPLE_FILE="k_lowest_rmsd_sample"
 
 if [[ ! -f "$SAMPLE_FILE" ]]; then
     echo "Error: sample file '$SAMPLE_FILE' not found."
@@ -18,27 +18,29 @@ while IFS= read -r line || [[ -n "$line" ]]; do
         continue
     fi
 
+    complex_type="${parts[1]}"  # MD_complexes_c3 or AF_complexes
     species="${parts[2]}"
     protein="${parts[3]}"
     ligand="${parts[4]}"
 
-    remote_dir="${DEST_BASE}/${species}/${protein}/${ligand}"
+    # Determine file name based on complex type
+    if [[ "$complex_type" == "MD_complexes_c3" ]]; then
+        dest_filename="MD_complex.pdb"
+    elif [[ "$complex_type" == "AF_complexes" ]]; then
+        dest_filename="AF3_complex.pdb"
+    else
+        echo "Skipping erroneous line type in path: $line"
+        continue
+    fi
 
-    # Create remote directory (using SSH)
+    remote_dir="${DEST_BASE}/${species}/${protein}/${ligand}"
+    src_pdb="${line}/complex.pdb"
+    dest_pdb="${remote_dir}/${dest_filename}"
+
+    # Create remote directory
     ssh "$DEST_HOST" "mkdir -p '$remote_dir'" < /dev/null
 
-    # Paths for rsync
-    md_src="${line}/complex.pdb"
-    md_dest="${remote_dir}/MD_complex.pdb"
-
-    echo "Syncing MD: $md_src -> $md_dest"
-    rsync -auvP "$md_src" "${DEST_HOST}:${md_dest}" < /dev/null
-
-    af_line="${line/MD_complexes_c3/AF_complexes}"
-    af_src="${af_line}/complex.pdb"
-    af_dest="${remote_dir}/AF3_complex.pdb"
-
-    echo "Syncing AF: $af_src -> $af_dest"
-    rsync -auvP "$af_src" "${DEST_HOST}:${af_dest}" < /dev/null
+    echo "Syncing: $src_pdb -> $dest_pdb"
+    rsync -auvP "$src_pdb" "${DEST_HOST}:${dest_pdb}" < /dev/null
 
 done < "$SAMPLE_FILE"

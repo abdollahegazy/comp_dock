@@ -106,7 +106,11 @@ foreach dir $complex_dirs {
 
 
         solvate_and_ionize "${output_prefix}.psf" "${output_prefix}.pdb" "${output_prefix}"
-        pbc writexst "${output_prefix}.xsc"
+
+        mol new "${output_prefix}_system.psf" type psf
+        mol addfile "${output_prefix}_system.pdb" type pdb waitfor all
+        pbc writexst "${output_prefix}_system.xsc"
+
         resetpsf
         mol delete all
 

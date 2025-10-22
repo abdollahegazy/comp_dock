@@ -10,10 +10,10 @@ This repository contains scripts to identify, process, and compare ligand–prot
 
 ## Current Status
 
-- **RMSD Calculation**: Computing RMSD between AF3-derived structures and MD-derived structures.
+- **RMSD Calculation**: Computing RMSD between AF3-derived structures and MD-derived structures. It finds distance between where the ligand is docked relatieve to each protein.
 - **Error Detection**: `find_empty_ligand.py` identifies ligand directories where AutoDock Vina failed (empty or missing poses).
 - **Pose Viability**: `most_viable.py` evaluates combinations of ligand poses/conformations and ranks those with the greatest number of successful structures for comparison.
-- **RMSD Testing**: `rmsd_test.py` performs per-atom RMSD calculations between AF3 and MD complexes.
+- **RMSD Testing**: `rmsd_test.py` performs per-atom RMSD calculations between AF3 and MD complexes (distance between ligand docked poisition).
 
 ---
 
@@ -46,10 +46,6 @@ python most_viable.py --input-dir /path/to/pos
 
 ### TODO:
 
-- sim stuff
-
-- manually inspect some outlier structures for validity
-
 - find mean RMSD for a given protein across all ligands. involves making graph across all proteins (prob histogram) where protein SaSa is X axis and average RMSD across all ligands on the Y axis. point is to see if larger proteins have more rmsd (because more SaSa = more space for ligands to choose from = more variability)
 
-- remaining: how representitive are these in the wild. not feasible to compare to crystal structures. take our samples and run in MD to see how they act in natural setting.
+
