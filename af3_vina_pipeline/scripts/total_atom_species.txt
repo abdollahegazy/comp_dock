@@ -1,0 +1,8 @@
+                              Arabidopsis_pct  DouglasFir_pct  Eucalyptus_pct  Human_pct
+Status                                                                                  
+Aromatic                             0.086721        0.087297        0.090644   0.088225
+Hydrophobic Side Chains              0.297018        0.310167        0.301476   0.304851
+Negative Charged Side Chains         0.120795        0.113289        0.107102   0.117823
+Polar Uncharged Chains               0.219062        0.207064        0.219229   0.208221
+Positive Charged Side Chains         0.142089        0.139226        0.135858   0.138125
+Special Cases                        0.134316        0.142957        0.145691   0.142755

@@ -1,0 +1,22 @@
+Atom,Status,pct
+R,Positive Charged Side Chains,0.057878615187348624
+H,Positive Charged Side Chains,0.021673315287077933
+K,Positive Charged Side Chains,0.05857315856959681
+D,Negative Charged Side Chains,0.05308804673030346
+E,Negative Charged Side Chains,0.06473500498646531
+S,Polar Uncharged Chains,0.0731229519874626
+T,Polar Uncharged Chains,0.054192192620031346
+N,Polar Uncharged Chains,0.041886308590967376
+Q,Polar Uncharged Chains,0.03901909103860949
+C,Special Cases,0.020925345490810657
+U,Special Cases,0.0
+G,Special Cases,0.07599016953982049
+P,Special Cases,0.04583986322838011
+A,Hydrophobic Side Chains,0.07940946003704231
+V,Hydrophobic Side Chains,0.06703234078928623
+I,Hydrophobic Side Chains,0.05112907821627012
+L,Hydrophobic Side Chains,0.08370138196324263
+M,Hydrophobic Side Chains,0.02357885738709218
+F,Aromatic,0.041619176520871916
+Y,Aromatic,0.03148596666191765
+W,Aromatic,0.015119675167402764
