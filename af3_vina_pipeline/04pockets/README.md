@@ -1,0 +1,1 @@
+after taking all the protein conformations, runs deepsurf to find pockets for each protein pdb. from `07_binding_pockets.sh`.
